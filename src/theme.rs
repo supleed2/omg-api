@@ -17,11 +17,11 @@ pub enum Theme {
 }
 
 impl Theme {
-    pub fn process(&self) {
+    pub fn process(&self, _address: &Option<String>) {
         match self {
             Theme::List => todo!(),
-            Theme::Info { id } => todo!(),
-            Theme::Preview { id } => todo!(),
+            Theme::Info { id: _ } => todo!(),
+            Theme::Preview { id: _ } => todo!(),
         }
     }
 }

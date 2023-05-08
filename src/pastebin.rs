@@ -26,13 +26,13 @@ pub enum Pastebin {
 }
 
 impl Pastebin {
-    pub fn process(&self) {
+    pub fn process(&self, _address: &Option<String>) {
         match self {
-            Pastebin::Get { name } => todo!(),
+            Pastebin::Get { name: _ } => todo!(),
             Pastebin::GetAll => todo!(),
             Pastebin::GetAllPublic => todo!(),
-            Pastebin::Set { name, content } => todo!(),
-            Pastebin::Delete { name } => todo!(),
+            Pastebin::Set { name: _, content: _ } => todo!(),
+            Pastebin::Delete { name: _ } => todo!(),
         }
     }
 }

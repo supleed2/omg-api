@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Address input parameter for fn `process` in `impl`s
+
 ### Changed
 
 ### Deprecated

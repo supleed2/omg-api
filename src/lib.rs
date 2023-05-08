@@ -36,13 +36,13 @@ pub enum Commands {
     },
     /// Get information and make changes to your addresses
     Address {
-        /// omg.lol address to interact with
+        /// omg.lol address to interact with, overrides config and env. var: (OMGLOL_USERNAME)
         #[clap(short, long, global = true)]
         address: Option<String>,
         #[clap(subcommand)]
         command: Address,
     },
-    /// Save your omg.lol API key to the config.json (Rather than using the OMGLOL_API_KEY environment variable)
+    /// Save your omg.lol API key to the config.json (Rather than using the env. var: OMGLOL_API_KEY)
     Auth {
         /// API key to save to config.json
         api_key: String,
@@ -51,7 +51,7 @@ pub enum Commands {
     Directory,
     /// Adjust the switchboard / DNS records for your omg.lol address
     Dns {
-        /// omg.lol address to interact with
+        /// omg.lol address to interact with, overrides config and env. var: (OMGLOL_USERNAME)
         #[clap(short, long, global = true)]
         address: Option<String>,
         #[clap(subcommand)]
@@ -59,7 +59,7 @@ pub enum Commands {
     },
     /// Manage the email configuration for an omg.lol address
     Email {
-        /// omg.lol address to interact with
+        /// omg.lol address to interact with, overrides config and env. var: (OMGLOL_USERNAME)
         #[clap(short, long, global = true)]
         address: Option<String>,
         #[clap(subcommand)]
@@ -67,7 +67,7 @@ pub enum Commands {
     },
     /// Manage your /now page
     Now {
-        /// omg.lol address to interact with
+        /// omg.lol address to interact with, overrides config and env. var: (OMGLOL_USERNAME)
         #[clap(short, long, global = true)]
         address: Option<String>,
         #[clap(subcommand)]
@@ -75,7 +75,7 @@ pub enum Commands {
     },
     /// Manage the pastebin for an omg.lol address
     Pastebin {
-        /// omg.lol address to interact with
+        /// omg.lol address to interact with, overrides config and env. var: (OMGLOL_USERNAME)
         #[clap(short, long, global = true)]
         address: Option<String>,
         #[clap(subcommand)]
@@ -92,7 +92,7 @@ pub enum Commands {
     },
     /// Manage PURLs (Persistent URLs) for your omg.lol address
     Purl {
-        /// omg.lol address to interact with
+        /// omg.lol address to interact with, overrides config and env. var: (OMGLOL_USERNAME)
         #[clap(short, long, global = true)]
         address: Option<String>,
         #[clap(subcommand)]
@@ -102,7 +102,7 @@ pub enum Commands {
     Service,
     /// Manage the statuslog for an omg.lol address
     Status {
-        /// omg.lol address to interact with
+        /// omg.lol address to interact with, overrides config and env. var: (OMGLOL_USERNAME)
         #[clap(short, long, global = true)]
         address: Option<String>,
         #[clap(subcommand)]
@@ -110,7 +110,7 @@ pub enum Commands {
     },
     /// Manage omg.lol profile themes
     Theme {
-        /// omg.lol address to interact with
+        /// omg.lol address to interact with, overrides config and env. var: (OMGLOL_USERNAME)
         #[clap(short, long, global = true)]
         address: Option<String>,
         #[clap(subcommand)]
@@ -118,7 +118,7 @@ pub enum Commands {
     },
     /// Manage profile page and web stuff for an omg.lol address
     Web {
-        /// omg.lol address to interact with
+        /// omg.lol address to interact with, overrides config and env. var: (OMGLOL_USERNAME)
         #[clap(short, long, global = true)]
         address: Option<String>,
         #[clap(subcommand)]
@@ -126,7 +126,7 @@ pub enum Commands {
     },
     /// Manage the weblog for an omg.lol address
     Weblog {
-        /// omg.lol address to interact with
+        /// omg.lol address to interact with, overrides config and env. var: (OMGLOL_USERNAME)
         #[clap(short, long, global = true)]
         address: Option<String>,
         #[clap(subcommand)]
@@ -135,25 +135,24 @@ pub enum Commands {
 }
 
 impl Commands {
-    fn process(&self) {
+    // TBD: Is there a more idiomatic / succinct approach to this?
+    pub fn process(&self, _address: &Option<String>) {
         match self {
-            Commands::Account { email, command } => {
-                command.process(email);
-            }
-            Commands::Address { address, command } => todo!(),
-            Commands::Auth { api_key } => todo!(),
+            Commands::Account { email, command } => command.process(email),
+            Commands::Address { address, command } => command.process(address),
+            Commands::Auth { api_key: _ } => todo!(),
             Commands::Directory => todo!(),
-            Commands::Dns { address, command } => todo!(),
-            Commands::Email { address, command } => todo!(),
-            Commands::Now { address, command } => todo!(),
-            Commands::Pastebin { address, command } => todo!(),
-            Commands::Preferences { owner, item, value } => todo!(),
-            Commands::Purl { address, command } => todo!(),
+            Commands::Dns { address, command } => command.process(address),
+            Commands::Email { address, command } => command.process(address),
+            Commands::Now { address, command } => command.process(address),
+            Commands::Pastebin { address, command } => command.process(address),
+            Commands::Preferences { owner: _, item: _, value: _ } => todo!(),
+            Commands::Purl { address, command } => command.process(address),
             Commands::Service => todo!(),
-            Commands::Status { address, command } => todo!(),
-            Commands::Theme { address, command } => todo!(),
-            Commands::Web { address, command } => todo!(),
-            Commands::Weblog { address, command } => todo!(),
+            Commands::Status { address, command } => command.process(address),
+            Commands::Theme { address, command } => command.process(address),
+            Commands::Web { address, command } => command.process(address),
+            Commands::Weblog { address, command } => command.process(address),
         }
     }
 }

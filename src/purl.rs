@@ -24,12 +24,12 @@ pub enum Purl {
 }
 
 impl Purl {
-    pub fn process(&self) {
+    pub fn process(&self, _address: &Option<String>) {
         match self {
-            Purl::Create { name, url } => todo!(),
-            Purl::Get { name } => todo!(),
+            Purl::Create { name: _, url: _ } => todo!(),
+            Purl::Get { name: _ } => todo!(),
             Purl::List => todo!(),
-            Purl::Delete { name } => todo!(),
+            Purl::Delete { name: _ } => todo!(),
         }
     }
 }

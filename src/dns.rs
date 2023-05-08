@@ -22,12 +22,12 @@ pub enum Dns {
 }
 
 impl Dns {
-    pub fn process(&self) {
+    pub fn process(&self, _address: &Option<String>) {
         match self {
             Dns::GetRecords => todo!(),
-            Dns::AddRecord { json_data } => todo!(),
-            Dns::UpdateRecord { json_data } => todo!(),
-            Dns::DeleteRecord { id } => todo!(),
+            Dns::AddRecord { json_data: _ } => todo!(),
+            Dns::UpdateRecord { json_data: _ } => todo!(),
+            Dns::DeleteRecord { id: _ } => todo!(),
         }
     }
 }

@@ -47,15 +47,15 @@ pub enum Status {
 }
 
 impl Status {
-    pub fn process(&self) {
+    pub fn process(&self, _address: &Option<String>) {
         match self {
-            Status::Get { id } => todo!(),
+            Status::Get { id: _ } => todo!(),
             Status::GetAll => todo!(),
-            Status::Create { emoji, content, external_url } => todo!(),
-            Status::EasyCreate { status } => todo!(),
-            Status::Update { id, emoji, content } => todo!(),
+            Status::Create { emoji: _, content: _, external_url: _ } => todo!(),
+            Status::EasyCreate { status: _ } => todo!(),
+            Status::Update { id: _, emoji: _, content: _ } => todo!(),
             Status::GetBio => todo!(),
-            Status::SetBio { content } => todo!(),
+            Status::SetBio { content: _ } => todo!(),
             Status::GetAllHistorical => todo!(),
             Status::Timeline => todo!(),
         }

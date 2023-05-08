@@ -13,7 +13,7 @@ pub enum Address {
 }
 
 impl Address {
-    pub fn process(&self) {
+    pub fn process(&self, _address: &Option<String>) {
         match self {
             Address::IsAvailable => todo!(),
             Address::GetExpiry => todo!(),

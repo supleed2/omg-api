@@ -22,7 +22,7 @@ pub enum Web {
 }
 
 impl Web {
-    pub fn process(&self) {
+    pub fn process(&self, _address: &Option<String>) {
         match self {
             Web::Get => todo!(),
             Web::Set { content: _, publish: _ } => todo!(),

@@ -17,11 +17,11 @@ pub enum Now {
 }
 
 impl Now {
-    pub fn process(&self) {
+    pub fn process(&self, _address: &Option<String>) {
         match self {
             Now::Get => todo!(),
             Now::List => todo!(),
-            Now::Set { content, listed } => todo!(),
+            Now::Set { content: _, listed: _ } => todo!(),
         }
     }
 }
