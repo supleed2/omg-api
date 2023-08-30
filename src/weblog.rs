@@ -1,6 +1,6 @@
 use clap::Subcommand;
 
-#[derive(Subcommand)]
+#[derive(Debug, Subcommand)]
 pub enum Weblog {
     /// Get a specific weblog entry for an omg.lol address
     Get {
@@ -38,7 +38,7 @@ pub enum Weblog {
 }
 
 impl Weblog {
-    pub fn process(&self, _address: &Option<String>) {
+    pub fn process(&self, _address: &str) {
         match self {
             Weblog::Get { id: _ } => todo!(),
             Weblog::Latest => todo!(),

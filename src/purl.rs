@@ -1,6 +1,6 @@
 use clap::Subcommand;
 
-#[derive(Subcommand)]
+#[derive(Debug, Subcommand)]
 pub enum Purl {
     /// Create a new PURL for an omg.lol address
     Create {
@@ -24,7 +24,7 @@ pub enum Purl {
 }
 
 impl Purl {
-    pub fn process(&self, _address: &Option<String>) {
+    pub fn process(&self, _address: &str) {
         match self {
             Purl::Create { name: _, url: _ } => todo!(),
             Purl::Get { name: _ } => todo!(),

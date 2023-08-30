@@ -1,6 +1,6 @@
 use clap::Subcommand;
 
-#[derive(Subcommand)]
+#[derive(Debug, Subcommand)]
 pub enum Now {
     /// Get the /now page for an address
     Get,
@@ -17,7 +17,7 @@ pub enum Now {
 }
 
 impl Now {
-    pub fn process(&self, _address: &Option<String>) {
+    pub fn process(&self, _address: &str) {
         match self {
             Now::Get => todo!(),
             Now::List => todo!(),

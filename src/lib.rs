@@ -3,7 +3,7 @@ use clap::Subcommand;
 pub mod account;
 pub use account::Account;
 pub mod address;
-pub use address::Address;
+pub use address::{Address, AddressResponse, GetExpiry, GetInfo, GetPublicInfo, IsAvailable};
 pub mod dns;
 pub use dns::Dns;
 pub mod email;
@@ -28,56 +28,38 @@ pub use weblog::Weblog;
 pub enum Commands {
     /// Get information and make changes to your account
     Account {
-        /// Email of your omg.lol account, needed for Account commands only
-        #[clap(short, long, global = true)]
-        email: String,
         #[clap(subcommand)]
         command: Account,
     },
     /// Get information and make changes to your addresses
     Address {
-        /// omg.lol address to interact with, overrides config and env. var: (OMGLOL_USERNAME)
-        #[clap(short, long, global = true)]
-        address: Option<String>,
         #[clap(subcommand)]
         command: Address,
     },
-    /// Save your omg.lol API key to the config.json (Rather than using the env. var: OMGLOL_API_KEY)
+    /// Save omg.lol API key to config.toml, will prompt (vs env. var: OMGLOL_API_KEY)
     Auth {
-        /// API key to save to config.json
-        api_key: String,
+        /// Linked omg.lol name for API key
+        name: String,
     },
     /// Get the address directory, consisting of addresses that have opted-in to be listed
     Directory,
     /// Adjust the switchboard / DNS records for your omg.lol address
     Dns {
-        /// omg.lol address to interact with, overrides config and env. var: (OMGLOL_USERNAME)
-        #[clap(short, long, global = true)]
-        address: Option<String>,
         #[clap(subcommand)]
         command: Dns,
     },
     /// Manage the email configuration for an omg.lol address
     Email {
-        /// omg.lol address to interact with, overrides config and env. var: (OMGLOL_USERNAME)
-        #[clap(short, long, global = true)]
-        address: Option<String>,
         #[clap(subcommand)]
         command: Email,
     },
     /// Manage your /now page
     Now {
-        /// omg.lol address to interact with, overrides config and env. var: (OMGLOL_USERNAME)
-        #[clap(short, long, global = true)]
-        address: Option<String>,
         #[clap(subcommand)]
         command: Now,
     },
     /// Manage the pastebin for an omg.lol address
     Pastebin {
-        /// omg.lol address to interact with, overrides config and env. var: (OMGLOL_USERNAME)
-        #[clap(short, long, global = true)]
-        address: Option<String>,
         #[clap(subcommand)]
         command: Pastebin,
     },
@@ -92,9 +74,6 @@ pub enum Commands {
     },
     /// Manage PURLs (Persistent URLs) for your omg.lol address
     Purl {
-        /// omg.lol address to interact with, overrides config and env. var: (OMGLOL_USERNAME)
-        #[clap(short, long, global = true)]
-        address: Option<String>,
         #[clap(subcommand)]
         command: Purl,
     },
@@ -102,33 +81,26 @@ pub enum Commands {
     Service,
     /// Manage the statuslog for an omg.lol address
     Status {
-        /// omg.lol address to interact with, overrides config and env. var: (OMGLOL_USERNAME)
-        #[clap(short, long, global = true)]
-        address: Option<String>,
         #[clap(subcommand)]
         command: Status,
     },
+    /// Set a default omg.lol address (and API key) from saved addresses
+    Switch {
+        /// new default omg.lol address, leave blank to list available addresses
+        address: Option<String>,
+    },
     /// Manage omg.lol profile themes
     Theme {
-        /// omg.lol address to interact with, overrides config and env. var: (OMGLOL_USERNAME)
-        #[clap(short, long, global = true)]
-        address: Option<String>,
         #[clap(subcommand)]
         command: Theme,
     },
     /// Manage profile page and web stuff for an omg.lol address
     Web {
-        /// omg.lol address to interact with, overrides config and env. var: (OMGLOL_USERNAME)
-        #[clap(short, long, global = true)]
-        address: Option<String>,
         #[clap(subcommand)]
         command: Web,
     },
     /// Manage the weblog for an omg.lol address
     Weblog {
-        /// omg.lol address to interact with, overrides config and env. var: (OMGLOL_USERNAME)
-        #[clap(short, long, global = true)]
-        address: Option<String>,
         #[clap(subcommand)]
         command: Weblog,
     },
@@ -136,23 +108,39 @@ pub enum Commands {
 
 impl Commands {
     // TBD: Is there a more idiomatic / succinct approach to this?
-    pub fn process(&self, _address: &Option<String>) {
+    pub fn process(
+        &self,
+        _address: &str,
+        api_key: &str,
+    ) -> Result<CommandResponse, reqwest::Error> {
         match self {
-            Commands::Account { email, command } => command.process(email),
-            Commands::Address { address, command } => command.process(address),
-            Commands::Auth { api_key: _ } => todo!(),
+            Commands::Account { command } => {
+                command.process();
+                Ok(CommandResponse::Todo(()))
+            }
+            Commands::Address { command } => {
+                Ok(CommandResponse::Address(command.process(api_key)?))
+            }
+            Commands::Auth { name } => unreachable!("{name}"),
             Commands::Directory => todo!(),
-            Commands::Dns { address, command } => command.process(address),
-            Commands::Email { address, command } => command.process(address),
-            Commands::Now { address, command } => command.process(address),
-            Commands::Pastebin { address, command } => command.process(address),
-            Commands::Preferences { owner: _, item: _, value: _ } => todo!(),
-            Commands::Purl { address, command } => command.process(address),
+            Commands::Dns { command } => todo!("{command:?}"),
+            Commands::Email { command } => todo!("{command:?}"),
+            Commands::Now { command } => todo!("{command:?}"),
+            Commands::Pastebin { command } => todo!("{command:?}"),
+            Commands::Preferences { owner, item, value } => todo!("{owner}, {item}, {value}"),
+            Commands::Purl { command } => todo!("{command:?}"),
             Commands::Service => todo!(),
-            Commands::Status { address, command } => command.process(address),
-            Commands::Theme { address, command } => command.process(address),
-            Commands::Web { address, command } => command.process(address),
-            Commands::Weblog { address, command } => command.process(address),
+            Commands::Status { command } => todo!("{command:?}"),
+            Commands::Switch { address: _ } => todo!(),
+            Commands::Theme { command } => todo!("{command:?}"),
+            Commands::Web { command } => todo!("{command:?}"),
+            Commands::Weblog { command } => todo!("{command:?}"),
         }
     }
+}
+
+#[derive(Debug)]
+pub enum CommandResponse {
+    Todo(()),
+    Address(AddressResponse),
 }

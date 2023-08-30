@@ -1,6 +1,6 @@
 use clap::Subcommand;
 
-#[derive(Subcommand)]
+#[derive(Debug, Subcommand)]
 pub enum Theme {
     /// List available omg.lol profile themes
     List,
@@ -17,7 +17,7 @@ pub enum Theme {
 }
 
 impl Theme {
-    pub fn process(&self, _address: &Option<String>) {
+    pub fn process(&self, _address: &str) {
         match self {
             Theme::List => todo!(),
             Theme::Info { id: _ } => todo!(),

@@ -1,6 +1,6 @@
 use clap::Subcommand;
 
-#[derive(Subcommand)]
+#[derive(Debug, Subcommand)]
 pub enum Web {
     /// Get web content and information for an omg.lol address
     Get,
@@ -22,7 +22,7 @@ pub enum Web {
 }
 
 impl Web {
-    pub fn process(&self, _address: &Option<String>) {
+    pub fn process(&self, _address: &str) {
         match self {
             Web::Get => todo!(),
             Web::Set { content: _, publish: _ } => todo!(),

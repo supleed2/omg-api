@@ -1,6 +1,6 @@
 use clap::Subcommand;
 
-#[derive(Subcommand)]
+#[derive(Debug, Subcommand)]
 pub enum Pastebin {
     /// Get a specific paste for an omg.lol address
     Get {
@@ -26,7 +26,7 @@ pub enum Pastebin {
 }
 
 impl Pastebin {
-    pub fn process(&self, _address: &Option<String>) {
+    pub fn process(&self, _address: &str) {
         match self {
             Pastebin::Get { name: _ } => todo!(),
             Pastebin::GetAll => todo!(),

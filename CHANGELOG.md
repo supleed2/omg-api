@@ -10,8 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Address input parameter for fn `process` in `impl`s
+- Derive `Debug` for subcommands in `/src`
 
 ### Changed
+
+- fn `process` in `impl`s takes `&str` instead of `&Option<String>`
 
 ### Deprecated
 
@@ -21,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Security
 
-## 0.1.0 - 2023-05-08
+## [0.1.0] - 2023-05-08
 
 ### Added
 

@@ -1,45 +1,66 @@
 use clap::Subcommand;
 
-#[derive(Subcommand)]
+#[derive(Debug, Subcommand)]
 pub enum Account {
     /// Get information about your account
-    GetInfo,
+    GetInfo {
+        /// Email of your omg.lol account
+        email: String,
+    },
     /// Get all addresses associated with your account
-    GetAddresses,
+    GetAddresses {
+        /// Email of your omg.lol account
+        email: String,
+    },
     /// Get the name associated with your account
-    GetName,
+    GetName {
+        /// Email of your omg.lol account
+        email: String,
+    },
     /// Update the name associated with your account
     SetName {
+        /// Email of your omg.lol account
+        email: String,
         /// Name to set for your account
         name: String,
     },
     /// Get all sessions associated with your account
-    GetSessions,
+    GetSessions {
+        /// Email of your omg.lol account
+        email: String,
+    },
     /// Delete a session from your account
     RemoveSession {
+        /// Email of your omg.lol account
+        email: String,
         /// ID of the session to remove
         session_id: String,
     },
     /// Get settings associated with your account
-    GetSettings,
+    GetSettings {
+        /// Email of your omg.lol account
+        email: String,
+    },
     /// Update settings associated with your account
     SetSettings {
+        /// Email of your omg.lol account
+        email: String,
         /// Temporary JSON data input
         json_data: String,
     },
 }
 
 impl Account {
-    pub fn process(&self, _email: &str) {
+    pub fn process(&self) {
         match self {
-            Account::GetInfo => todo!(),
-            Account::GetAddresses => todo!(),
-            Account::GetName => todo!(),
-            Account::SetName { name: _ } => todo!(),
-            Account::GetSessions => todo!(),
-            Account::RemoveSession { session_id: _ } => todo!(),
-            Account::GetSettings => todo!(),
-            Account::SetSettings { json_data: _ } => todo!(),
+            Account::GetInfo { email: _ } => todo!(),
+            Account::GetAddresses { email: _ } => todo!(),
+            Account::GetName { email: _ } => todo!(),
+            Account::SetName { email: _, name: _ } => todo!(),
+            Account::GetSessions { email: _ } => todo!(),
+            Account::RemoveSession { email: _, session_id: _ } => todo!(),
+            Account::GetSettings { email: _ } => todo!(),
+            Account::SetSettings { email: _, json_data: _ } => todo!(),
         }
     }
 }

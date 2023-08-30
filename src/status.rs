@@ -1,6 +1,6 @@
 use clap::Subcommand;
 
-#[derive(Subcommand)]
+#[derive(Debug, Subcommand)]
 pub enum Status {
     /// Get a single statuslog entry for an omg.lol address
     Get {
@@ -47,7 +47,7 @@ pub enum Status {
 }
 
 impl Status {
-    pub fn process(&self, _address: &Option<String>) {
+    pub fn process(&self, _address: &str) {
         match self {
             Status::Get { id: _ } => todo!(),
             Status::GetAll => todo!(),

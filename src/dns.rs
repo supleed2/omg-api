@@ -1,6 +1,6 @@
 use clap::Subcommand;
 
-#[derive(Subcommand)]
+#[derive(Debug, Subcommand)]
 pub enum Dns {
     /// Get a list of all your DNS records
     GetRecords,
@@ -22,7 +22,7 @@ pub enum Dns {
 }
 
 impl Dns {
-    pub fn process(&self, _address: &Option<String>) {
+    pub fn process(&self, _address: &str) {
         match self {
             Dns::GetRecords => todo!(),
             Dns::AddRecord { json_data: _ } => todo!(),

@@ -1,6 +1,6 @@
 use clap::Subcommand;
 
-#[derive(Subcommand)]
+#[derive(Debug, Subcommand)]
 pub enum Email {
     /// Get forwarding address(es)
     GetForwards,
@@ -12,7 +12,7 @@ pub enum Email {
 }
 
 impl Email {
-    pub fn process(&self, _address: &Option<String>) {
+    pub fn process(&self, _address: &str) {
         match self {
             Email::GetForwards => todo!(),
             Email::SetForwards { json_data: _ } => todo!(),
