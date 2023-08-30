@@ -23,15 +23,35 @@ pub use web::Web;
 pub mod weblog;
 pub use weblog::Weblog;
 
+fn get<T: serde::de::DeserializeOwned>(url: &str) -> Result<T, reqwest::Error> {
+    reqwest::blocking::Client::new()
+        .get(format!("https://api.omg.lol/{}", url))
+        .send()?
+        .error_for_status()?
+        .json::<T>()
+}
+
+fn get_auth<T: serde::de::DeserializeOwned>(api_key: &str, url: &str) -> Result<T, reqwest::Error> {
+    reqwest::blocking::Client::new()
+        .get(format!("https://api.omg.lol/{}", url))
+        .header(reqwest::header::AUTHORIZATION, format!("Bearer {api_key}"))
+        .send()?
+        .error_for_status()?
+        .json::<T>()
+}
+
+// TODO: gate clap derives behind crate feature, not needed for TUI/GUI
 // TODO: allow content fields for some commands to provide filepaths, using the content of the file instead
 #[derive(Subcommand)]
 pub enum Commands {
     /// Get information and make changes to your account
+    #[clap(visible_aliases = &["ac"])]
     Account {
         #[clap(subcommand)]
         command: Account,
     },
     /// Get information and make changes to your addresses
+    #[clap(visible_aliases = &["a"])]
     Address {
         #[clap(subcommand)]
         command: Address,
@@ -42,28 +62,34 @@ pub enum Commands {
         name: String,
     },
     /// Get the address directory, consisting of addresses that have opted-in to be listed
+    #[clap(visible_aliases = &["dir"])]
     Directory,
     /// Adjust the switchboard / DNS records for your omg.lol address
+    #[clap(visible_aliases = &["d"])]
     Dns {
         #[clap(subcommand)]
         command: Dns,
     },
     /// Manage the email configuration for an omg.lol address
+    #[clap(visible_aliases = &["e"])]
     Email {
         #[clap(subcommand)]
         command: Email,
     },
     /// Manage your /now page
+    #[clap(visible_aliases = &["n"])]
     Now {
         #[clap(subcommand)]
         command: Now,
     },
     /// Manage the pastebin for an omg.lol address
+    #[clap(visible_aliases = &["p"])]
     Pastebin {
         #[clap(subcommand)]
         command: Pastebin,
     },
     /// Manage preferences for omg.lol accounts, addresses and objects
+    #[clap(visible_aliases = &["pr"])]
     Preferences {
         /// Account to change settings for
         owner: String,
@@ -73,6 +99,7 @@ pub enum Commands {
         value: String,
     },
     /// Manage PURLs (Persistent URLs) for your omg.lol address
+    #[clap(visible_aliases = &["u"])]
     Purl {
         #[clap(subcommand)]
         command: Purl,
@@ -80,6 +107,7 @@ pub enum Commands {
     /// Get service information about omg.lol
     Service,
     /// Manage the statuslog for an omg.lol address
+    #[clap(visible_aliases = &["s"])]
     Status {
         #[clap(subcommand)]
         command: Status,
@@ -90,16 +118,19 @@ pub enum Commands {
         address: Option<String>,
     },
     /// Manage omg.lol profile themes
+    #[clap(visible_aliases = &["t"])]
     Theme {
         #[clap(subcommand)]
         command: Theme,
     },
     /// Manage profile page and web stuff for an omg.lol address
+    #[clap(visible_aliases = &["w"])]
     Web {
         #[clap(subcommand)]
         command: Web,
     },
     /// Manage the weblog for an omg.lol address
+    #[clap(visible_aliases = &["b"])]
     Weblog {
         #[clap(subcommand)]
         command: Weblog,

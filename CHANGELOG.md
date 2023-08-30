@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Address input parameter for fn `process` in `impl`s
+- `Address` implementation for subcommands
+- API `get` and `get_auth` functions in lib root
+- Clap derived subcommand short aliases, using `visible_aliases`
 - Derive `Debug` for subcommands in `/src`
 
 ### Changed

@@ -3,21 +3,25 @@ use clap::Subcommand;
 #[derive(Debug, Subcommand)]
 pub enum Account {
     /// Get information about your account
+    #[clap(visible_alias = "gi")]
     GetInfo {
         /// Email of your omg.lol account
         email: String,
     },
     /// Get all addresses associated with your account
+    #[clap(visible_alias = "ga")]
     GetAddresses {
         /// Email of your omg.lol account
         email: String,
     },
     /// Get the name associated with your account
+    #[clap(visible_alias = "gn")]
     GetName {
         /// Email of your omg.lol account
         email: String,
     },
     /// Update the name associated with your account
+    #[clap(visible_alias = "sn")]
     SetName {
         /// Email of your omg.lol account
         email: String,
@@ -25,11 +29,13 @@ pub enum Account {
         name: String,
     },
     /// Get all sessions associated with your account
+    #[clap(visible_alias = "gs")]
     GetSessions {
         /// Email of your omg.lol account
         email: String,
     },
     /// Delete a session from your account
+    #[clap(visible_alias = "rs")]
     RemoveSession {
         /// Email of your omg.lol account
         email: String,
@@ -37,11 +43,13 @@ pub enum Account {
         session_id: String,
     },
     /// Get settings associated with your account
+    #[clap(visible_alias = "gset")]
     GetSettings {
         /// Email of your omg.lol account
         email: String,
     },
     /// Update settings associated with your account
+    #[clap(visible_alias = "sset")]
     SetSettings {
         /// Email of your omg.lol account
         email: String,
