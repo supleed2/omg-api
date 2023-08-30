@@ -1,9 +1,13 @@
 [package]
 name = "omg-api"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 description = "Library for interacting with the omg.lol API, used by the omg crate"
+homepage = "https://github.com/supleed2/omg-api"
+repository = "https://github.com/supleed2/omg-api"
 license = "Apache-2.0"
+# keywords = []
+categories = ["api-bindings"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
